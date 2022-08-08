@@ -27,8 +27,11 @@ supports the following command line arguments:
 - `--appid="123"`: The GitHub App ID, found in https://github.com/organizations/*ORGNAME*/settings/apps/*APPNAME*
 - `--appinstall="12345678"`: The GitHub App Install ID for this installation, found in
   https://github.com/organizations/*ORGNAME*/settings/installations
-- `--keyfile="file.pem"`: The name of the file holding a PEM encoded private key,
-  which can be generated in https://github.com/organizations/*ORGNAME*/settings/apps/*APPNAME*
+
+Additionally, the bot supports the following environment variables (which are often used
+by secrets management infrastructure in cloud providers):
+- `GH_APP_PRIVATE_KEY`: a PEM encoded private key, which can be generated in
+  https://github.com/organizations/*ORGNAME*/settings/apps/*APPNAME*
 
 
 ### Reducing latency using GitHub webhooks
@@ -39,9 +42,9 @@ for "Pull request reviews" events.
 
 GitHub should be configured to deliver webhook events to `https://Public-DNS-name:10777/webhook`
 
-- `--webhook_secret_file="filename.txt"`: The shared secret configured in the webhook in
-  https://github.com/organizations/*ORGNAME*/settings/hooks/*WEBHOOK_ID*?tab=settings
-- `--port="1234"` Listen on a port different from the default 10777.
+The bot expects to find the shared secret for validating webhook payloads in a `WEBHOOK_SECRET`
+environment variable. The shared secret is configured in the webhook in
+https://github.com/organizations/*ORGNAME*/settings/hooks/*WEBHOOK_ID*?tab=settings
 
 
 ### Monitoring
